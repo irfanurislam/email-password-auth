@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  import { faIcons,faSlash } from '@fortawesome/free-solid-svg-icons'
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 import { Link } from "react-router-dom";
@@ -73,8 +74,9 @@ const updateUserData = (user,name) =>{
 }
 
 
+// password type
 
-
+const [passwordType, setPasswordType] = useState("password");
 
 
   const handleEmailChange = (event) =>{
@@ -83,8 +85,17 @@ const updateUserData = (user,name) =>{
   }
   const handlePasswordBlur = (event) =>{
     console.log(event.target.value)
+    
   }
 
+  const togglePassword =()=>{
+    if(passwordType==="password")
+    {
+     setPasswordType("text")
+     return;
+    }
+    setPasswordType("password")
+  }
 
 
 
@@ -106,7 +117,14 @@ const updateUserData = (user,name) =>{
           id="password"
           placeholder="your password"
           required
+          
         />
+        <div className="input-group-btn">
+                     <button className="btn btn-outline-primary" onClick={togglePassword}>
+                     { passwordType==="password"? <i className="bi bi-eye-slash"></i> :<i className="bi bi-eye"></i>
+                      }
+                     </button>
+                    </div>
         <br />
         <p className="text-danger">{error}</p>
         <input  type="submit" value="Register" className="btn btn-primary" />
